@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Descubre el ranking mundial de las mejores comidas. Explora platos de diferentes culturas con nuestro diseño futurista e interactivo." />
+  <meta name="keywords" content="comida, ranking, gastronomía, cocina internacional, recetas, platos" />
+  <meta name="author" content="Tu Nombre" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tu-usuario.github.io/food-ranking/" />
+  <meta property="og:title" content="Food Ranking - Ranking Mundial de Comidas" />
+  <meta property="og:description" content="Descubre las mejores comidas del mundo con nuestro ranking interactivo" />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/0d0f14/00f0ff?text=Food+Ranking" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://tu-usuario.github.io/food-ranking/" />
+  <meta property="twitter:title" content="Food Ranking - Ranking Mundial de Comidas" />
+  <meta property="twitter:description" content="Descubre las mejores comidas del mundo con nuestro ranking interactivo" />
+  <meta property="twitter:image" content="https://via.placeholder.com/1200x630/0d0f14/00f0ff?text=Food+Ranking" />
+
+  <title>Food Ranking - Ranking Mundial de Comidas</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>" />
+
+  <!-- Tipografía futurista desde Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ====================================
+       Variables de color y tipografías
+       ==================================== */
+    :root {
+      /* Colores principales - Tema oscuro */
+      --bg-color: #0d0f14;
+      --card-bg: #1e2028;
+      --accent-neon: #00f0ff;
+      --accent-neon-hover: #00d4dd;
+      --text-light: #e0e0e0;
+      --text-muted: #a0a0a0;
+      --border-color: #2a2c33;
+
+      /* Sombras y bordes */
+      --shadow-glow: 0 0 16px rgba(0, 240, 255, 0.4), 0 4px 16px rgba(0, 0, 0, 0.5);
+      --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+      /* Tipografías */
+      --font-heading: "Orbitron", sans-serif;
+      --font-body: "Roboto", sans-serif;
+
+      /* Transiciones */
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s ease;
+
+      /* Espaciado */
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --spacing-xxl: 3rem;
+
+      /* Border radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 50px;
+    }
+
+    /* Tema claro */
+    [data-theme="light"] {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --accent-neon: #0088a9;
+      --accent-neon-hover: #006d8a;
+      --text-light: #1a202c;
+      --text-muted: #4a5568;
+      --border-color: #e2e8f0;
+      --shadow-glow: 0 0 16px rgba(0, 136, 169, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);
+      --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ================================
+       Reset básico y estilos globales
+       ================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      height: 100%;
+      background-color: var(--bg-color);
+      color: var(--text-light);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color var(--transition-normal), color var(--transition-normal);
+    }
+
+    a {
+      color: var(--accent-neon);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    a:hover,
+    a:focus {
+      color: var(--accent-neon-hover);
+      outline: none;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      transition: all var(--transition-fast);
+    }
+
+    button:focus {
+      outline: 2px solid var(--accent-neon);
+      outline-offset: 2px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ================================
+       Utilidades
+       ================================ */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: var(--spacing-xxl);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      grid-column: 1 / -1;
+    }
+
+    /* ================================
+       Loading spinner
+       ================================ */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--border-color);
+      border-top: 3px solid var(--accent-neon);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: var(--spacing-md);
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ====================
+       Contenedor principal
+       ==================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--spacing-xl) var(--spacing-md);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    /* ====================
+       Cabecera / Header
+       ==================== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: var(--spacing-xl);
+      position: relative;
+    }
+
+    header .logo {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--accent-neon);
+      text-shadow: var(--shadow-glow);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    nav ul {
+      display: flex;
+      gap: var(--spacing-lg);
+      list-style: none;
+    }
+
+    nav ul li a {
+      font-weight: 500;
+      position: relative;
+      padding: var(--spacing-sm) 0;
+    }
+
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--accent-neon);
+      transition: width var(--transition-normal), left var(--transition-normal);
+    }
+
+    nav ul li a:hover::after,
+    nav ul li a.active::after {
+      width: 100%;
+      left: 0;
+    }
+
+    /* Botón de cambio de tema */
+    #theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: var(--spacing-sm);
+      border-radius: 50%;
+      transition: background-color var(--transition-normal), transform var(--transition-fast);
+    }
+
+    #theme-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
+    /* ====================
+       Sección de ranking
+       ==================== */
+    .ranking-section {
+      padding: var(--spacing-xl) 0;
+    }
+
+    .ranking-section h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      text-align: center;
+      margin-bottom: var(--spacing-md);
+      color: var(--accent-neon);
+      text-shadow: var(--shadow-glow);
+    }
+
+    .ranking-description {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: var(--spacing-xl);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Filtros */
+    .filters {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .search-box {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto var(--spacing-lg);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 2.5rem;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: var(--text-light);
+      font-family: var(--font-body);
+      box-shadow: var(--shadow-card);
+      transition: box-shadow var(--transition-normal), border-color var(--transition-normal);
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent-neon);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: var(--spacing-md);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .category-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+    }
+
+    .filter-btn {
+      padding: var(--spacing-sm) var(--spacing-lg);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--accent-neon);
+      background: transparent;
+      color: var(--text-light);
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      font-weight: 500;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background-color: var(--accent-neon);
+      color: var(--bg-color);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* Lista de ítems: usamos un grid para hacer tarjetas */
+    #ranking-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--spacing-lg);
+      list-style: none;
+      padding: 0;
+    }
+
+    #ranking-list li {
+      background-color: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      position: relative;
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+      border: 1px solid var(--border-color);
+    }
+
+    #ranking-list li:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* Imagen de la comida */
+    .food-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    #ranking-list li:hover .food-img {
+      transform: scale(1.05);
+    }
+
+    /* Contenido interno de cada tarjeta */
+    .food-info {
+      padding: var(--spacing-lg);
+    }
+
+    .food-info h3 {
+      font-family: var(--font-heading);
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.3rem;
+      color: var(--text-light);
+    }
+
+    .food-info .category {
+      display: inline-block;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      background-color: rgba(0, 240, 255, 0.2);
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      margin-bottom: var(--spacing-md);
+      color: var(--accent-neon);
+      font-weight: 500;
+    }
+
+    .food-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: var(--spacing-md);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.5;
+    }
+
+    /* Ranking badge */
+    .rank-badge {
+      position: absolute;
+      top: var(--spacing-md);
+      left: var(--spacing-md);
+      width: 40px;
+      height: 40px;
+      background-color: var(--accent-neon);
+      color: var(--bg-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: bold;
+      box-shadow: var(--shadow-glow);
+      z-index: 1;
+    }
+
+    /* Rating stars */
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .stars {
+      color: var(--accent-neon);
+      font-size: 1rem;
+    }
+
+    .rating-value {
+      font-weight: bold;
+      color: var(--text-light);
+    }
+
+    /* Ver más botón */
+    .view-more {
+      display: inline-block;
+      padding: var(--spacing-sm) var(--spacing-lg);
+      background-color: var(--accent-neon);
+      color: var(--bg-color);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      font-weight: 600;
+      border: none;
+    }
+
+    .view-more:hover {
+      background-color: var(--accent-neon-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 240, 255, 0.3);
+    }
+
+    /* ====================
+       Footer
+       ==================== */
+    footer {
+      margin-top: var(--spacing-xxl);
+      border-top: 1px solid var(--border-color);
+      padding-top: var(--spacing-xl);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-xl);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .footer-section h3 {
+      font-family: var(--font-heading);
+      margin-bottom: var(--spacing-md);
+      font-size: 1.2rem;
+      color: var(--accent-neon);
+    }
+
+    .footer-logo {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--accent-neon);
+      margin-bottom: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .footer-section p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .footer-section ul li a {
+      color: var(--text-muted);
+      transition: color var(--transition-fast);
+    }
+
+    .footer-section ul li a:hover {
+      color: var(--accent-neon);
+    }
+
+    .social-icons {
+      display: flex;
+      gap: var(--spacing-md);
+    }
+
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      transition: all var(--transition-normal);
+      border: 1px solid var(--border-color);
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-3px);
+      background-color: var(--accent-neon);
+      color: var(--bg-color);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: var(--spacing-lg);
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ====================
+       Modal
+       ==================== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      overflow-y: auto;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: var(--card-bg);
+      margin: 5% auto;
+      padding: var(--spacing-xl);
+      width: 90%;
+      max-width: 800px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-glow);
+      animation: modalFadeIn var(--transition-normal) ease;
+      border: 1px solid var(--border-color);
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: var(--spacing-md);
+      right: var(--spacing-lg);
+      font-size: 2rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color var(--transition-normal);
+      background: none;
+      border: none;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .close-modal:hover {
+      color: var(--accent-neon);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .modal-food-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .modal-food-info h2 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      margin-bottom: var(--spacing-md);
+      color: var(--accent-neon);
+    }
+
+    .modal-category {
+      display: inline-block;
+      padding: var(--spacing-sm) var(--spacing-md);
+      background-color: rgba(0, 240, 255, 0.2);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      margin-bottom: var(--spacing-md);
+      color: var(--accent-neon);
+      font-weight: 500;
+    }
+
+    .modal-rating {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .modal-rating .stars {
+      font-size: 1.2rem;
+    }
+
+    .modal-rating .rank {
+      margin-left: auto;
+      background-color: var(--accent-neon);
+      color: var(--bg-color);
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--radius-sm);
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .modal-description {
+      margin-bottom: var(--spacing-lg);
+      line-height: 1.8;
+      color: var(--text-light);
+    }
+
+    .modal-ingredients {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .modal-ingredients h3 {
+      font-family: var(--font-heading);
+      margin-bottom: var(--spacing-md);
+      color: var(--accent-neon);
+    }
+
+    .ingredients-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--spacing-sm);
+      list-style: none;
+    }
+
+    .ingredients-list li {
+      padding: var(--spacing-sm);
+      background-color: rgba(0, 240, 255, 0.1);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      color: var(--text-light);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+    }
+
+    .ingredients-list li i {
+      color: var(--accent-neon);
+      font-size: 0.8rem;
+    }
+
+    /* ====================
+       Responsive
+       ==================== */
+    @media (max-width: 768px) {
+      .container {
+        padding: var(--spacing-md) var(--spacing-sm);
+      }
+
+      header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        text-align: center;
+      }
+
+      nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      #theme-toggle {
+        position: absolute;
+        top: var(--spacing-md);
+        right: var(--spacing-md);
+      }
+
+      .ranking-section h1 {
+        font-size: 2rem;
+      }
+
+      #ranking-list {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: var(--spacing-md);
+      }
+
+      .modal-content {
+        margin: 10% auto;
+        padding: var(--spacing-lg);
+        width: 95%;
+      }
+
+      .modal-food-img {
+        height: 200px;
+      }
+
+      .modal-food-info h2 {
+        font-size: 1.5rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav ul {
+        gap: var(--spacing-md);
+        flex-wrap: wrap;
+      }
+
+      .category-filters {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .filter-btn {
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .modal-content {
+        padding: var(--spacing-md);
+        margin: 5% auto;
+      }
+
+      .ingredients-list {
+        grid-template-columns: 1fr;
+      }
+
+      #ranking-list {
+        grid-template-columns: 1fr;
+      }
+
+      .food-info {
+        padding: var(--spacing-md);
+      }
+    }
+
+    /* ====================
+       Animaciones adicionales
+       ==================== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ranking-section {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    /* Mejoras de accesibilidad */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus visible para mejor accesibilidad */
+    .filter-btn:focus-visible,
+    .view-more:focus-visible,
+    #theme-toggle:focus-visible {
+      outline: 2px solid var(--accent-neon);
+      outline-offset: 2px;
+    }
+
+    /* Animaciones para notificaciones */
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Cabecera -->
+    <header>
+      <div class="logo">
+        <i class="fas fa-utensils"></i>
+        FoodRank
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#" class="active">Inicio</a></li>
+          <li><a href="#ranking">Rankings</a></li>
+          <li><a href="#categories">Categorías</a></li>
+          <li><a href="#about">Acerca de</a></li>
+        </ul>
+      </nav>
+      <button id="theme-toggle" aria-label="Cambiar tema">
+        <i class="fas fa-moon"></i>
+      </button>
+    </header>
+
+    <!-- Sección principal de ranking -->
+    <main>
+      <section class="ranking-section" id="ranking">
+        <h1>Ranking Mundial de Comidas</h1>
+        <p class="ranking-description">Descubre las comidas mejor valoradas por expertos culinarios de todo el mundo.</p>
+        
+        <!-- Filtros -->
+        <div class="filters">
+          <div class="search-box">
+            <input type="text" id="search-input" placeholder="Buscar comida..." aria-label="Buscar comida">
+            <i class="fas fa-search"></i>
+          </div>
+          <div class="category-filters" id="categories">
+            <button class="filter-btn active" data-category="all">Todas</button>
+            <button class="filter-btn" data-category="italiana">Italiana</button>
+            <button class="filter-btn" data-category="mexicana">Mexicana</button>
+            <button class="filter-btn" data-category="asiatica">Asiática</button>
+            <button class="filter-btn" data-category="española">Española</button>
+          </div>
+        </div>
+
+        <!-- Lista de comidas rankeadas -->
+        <ul id="ranking-list" role="list">
+          <!-- Las tarjetas se generarán con JavaScript -->
+        </ul>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="about">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <i class="fas fa-utensils"></i>
+            FoodRank
+          </div>
+          <p>Descubriendo los sabores más extraordinarios del mundo, una comida a la vez.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Enlaces</h3>
+          <ul>
+            <li><a href="#ranking">Rankings</a></li>
+            <li><a href="#categories">Categorías</a></li>
+            <li><a href="#about">Sobre nosotros</a></li>
+            <li><a href="#privacy">Política de privacidad</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Síguenos</h3>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook" title="Facebook">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" aria-label="Twitter" title="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" aria-label="Instagram" title="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" aria-label="YouTube" title="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 FoodRank. Todos los derechos reservados. Hecho con ❤️ para los amantes de la comida.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal para detalles de comida -->
+  <div id="food-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close-modal" aria-label="Cerrar modal">&times;</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Loading spinner -->
+  <div id="loading" class="loading" style="display: none;">
+    <div class="spinner"></div>
+    <p>Cargando deliciosas comidas...</p>
+  </div>
+
+  <script>
+    // Datos de comidas (simulando una base de datos)
+    const foods = [
+      {
+        id: 1,
+        name: "Pizza Napolitana",
+        category: "italiana",
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "La auténtica pizza napolitana con masa fina, salsa de tomate San Marzano y mozzarella de búfala.",
+        rating: 4.9,
+        rank: 1,
+        ingredients: ["Harina 00", "Tomates San Marzano", "Mozzarella de búfala", "Albahaca fresca", "Aceite de oliva", "Sal marina"],
+        fullDescription: "La Pizza Napolitana es el orgullo de Italia y Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO. Su masa, fermentada durante al menos 8 horas, se hornea a 485°C durante solo 60-90 segundos, creando una textura inigualable con bordes inflados y centro delgado. Los ingredientes simples pero de alta calidad son la clave de su sabor excepcional."
+      },
+      {
+        id: 2,
+        name: "Tacos al Pastor",
+        category: "mexicana",
+        image: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "Deliciosos tacos de cerdo marinado en achiote, asado en trompo vertical y servido con piña.",
+        rating: 4.8,
+        rank: 2,
+        ingredients: ["Carne de cerdo", "Achiote", "Piña", "Cebolla", "Cilantro", "Tortillas de maíz", "Limón"],
+        fullDescription: "Los Tacos al Pastor son un ícono de la gastronomía mexicana con influencia libanesa. La carne se marina en una mezcla de achiote y especias durante horas, luego se apila en un trompo vertical similar al shawarma. Al cocinarse, se corta en finas láminas directamente sobre pequeñas tortillas de maíz y se corona con piña fresca, cebolla y cilantro."
+      },
+      {
+        id: 3,
+        name: "Sushi Omakase",
+        category: "asiatica",
+        image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "Experiencia premium de sushi donde el chef selecciona las mejores piezas del día.",
+        rating: 4.7,
+        rank: 3,
+        ingredients: ["Arroz de sushi", "Pescado fresco variado", "Alga nori", "Wasabi", "Jengibre encurtido", "Salsa de soja"],
+        fullDescription: "El Omakase, que significa 'confío en ti' en japonés, es la experiencia gastronómica definitiva donde el maestro sushiman decide qué servir basándose en los ingredientes más frescos disponibles ese día. Cada pieza se prepara frente al comensal, siguiendo técnicas perfeccionadas durante siglos."
+      },
+      {
+        id: 4,
+        name: "Paella Valenciana",
+        category: "española",
+        image: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "El clásico arroz español con azafrán, pollo, conejo y verduras de temporada.",
+        rating: 4.6,
+        rank: 4,
+        ingredients: ["Arroz bomba", "Pollo", "Conejo", "Judías verdes", "Garrofón", "Azafrán", "Pimentón", "Aceite de oliva"],
+        fullDescription: "La auténtica Paella Valenciana es mucho más que un plato de arroz; es un ritual que se remonta al siglo XVIII en la Albufera valenciana. Cocinada tradicionalmente por los hombres en domingo, utiliza arroz bomba que absorbe tres veces su volumen sin romperse."
+      },
+      {
+        id: 5,
+        name: "Ramen Tonkotsu",
+        category: "asiatica",
+        image: "https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "Caldo cremoso de huesos de cerdo cocido durante horas con fideos artesanales y toppings variados.",
+        rating: 4.5,
+        rank: 5,
+        ingredients: ["Huesos de cerdo", "Fideos de ramen", "Chashu (cerdo)", "Huevo marinado", "Cebolleta", "Alga nori", "Brotes de bambú"],
+        fullDescription: "El Ramen Tonkotsu es la variedad más laboriosa y rica de este plato japonés. Su caldo, de un blanco lechoso, se obtiene hirviendo huesos de cerdo a fuego lento durante 12-18 horas, liberando colágeno y médula que crean una textura cremosa y profundamente sabrosa."
+      },
+      {
+        id: 6,
+        name: "Lasaña Boloñesa",
+        category: "italiana",
+        image: "https://images.unsplash.com/photo-1619895092538-128341789043?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "Capas de pasta fresca intercaladas con ragú de carne, bechamel y queso parmesano.",
+        rating: 4.4,
+        rank: 6,
+        ingredients: ["Láminas de pasta", "Carne picada", "Tomate", "Bechamel", "Queso parmesano", "Cebolla", "Zanahoria", "Apio"],
+        fullDescription: "La Lasaña Boloñesa es un monumento a la paciencia culinaria italiana. El auténtico ragù alla bolognese se cocina lentamente durante al menos 4 horas, permitiendo que la carne desarrolle sabores profundos junto con el sofrito de verduras, vino tinto y tomate."
+      },
+      {
+        id: 7,
+        name: "Tacos de Cochinita Pibil",
+        category: "mexicana",
+        image: "https://images.unsplash.com/photo-1653412998410-d5d8fc3ff2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "Cerdo marinado en achiote y naranja agria, cocinado lentamente envuelto en hojas de plátano.",
+        rating: 4.3,
+        rank: 7,
+        ingredients: ["Carne de cerdo", "Achiote", "Naranja agria", "Hojas de plátano", "Cebolla morada", "Habanero", "Tortillas de maíz"],
+        fullDescription: "La Cochinita Pibil es un tesoro gastronómico de la península de Yucatán con raíces mayas. Tradicionalmente, la carne se marina en achiote y naranja agria, luego se envuelve en hojas de plátano y se cocina en un horno subterráneo llamado 'pib'."
+      },
+      {
+        id: 8,
+        name: "Dim Sum Variado",
+        category: "asiatica",
+        image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "Selección de pequeñas delicias cantonesas al vapor, fritas y horneadas.",
+        rating: 4.2,
+        rank: 8,
+        ingredients: ["Harina de trigo", "Harina de arroz", "Camarones", "Cerdo", "Pollo", "Verduras variadas", "Salsa de soja"],
+        fullDescription: "El Dim Sum representa la quintaesencia de la cocina cantonesa, donde pequeñas porciones de una gran variedad de platos se sirven tradicionalmente con té durante el brunch. Cada pieza es una obra maestra en miniatura que requiere técnica precisa."
+      },
+      {
+        id: 9,
+        name: "Risotto ai Funghi Porcini",
+        category: "italiana",
+        image: "https://images.unsplash.com/photo-1633964913295-ceb43826e7c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "Cremoso arroz italiano cocinado lentamente con hongos porcini y queso parmesano.",
+        rating: 4.1,
+        rank: 9,
+        ingredients: ["Arroz arborio", "Hongos porcini", "Caldo de verduras", "Vino blanco", "Queso parmesano", "Mantequilla", "Cebolla"],
+        fullDescription: "El Risotto ai Funghi Porcini ejemplifica la filosofía del norte de Italia de transformar ingredientes simples en algo extraordinario mediante técnica y paciencia. El secreto está en tostar el arroz arborio en mantequilla antes de añadir lentamente el caldo caliente."
+      },
+      {
+        id: 10,
+        name: "Mole Poblano",
+        category: "mexicana",
+        image: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+        description: "Compleja salsa mexicana con chocolate, chiles y especias, tradicionalmente servida con pavo o pollo.",
+        rating: 4.0,
+        rank: 10,
+        ingredients: ["Chiles varios", "Chocolate", "Tomate", "Almendras", "Ajonjolí", "Canela", "Clavo", "Pollo o pavo"],
+        fullDescription: "El Mole Poblano es considerado uno de los platillos más emblemáticos de México y representa la complejidad y riqueza de su gastronomía. Su elaboración es un verdadero ritual que puede llevar días, combinando más de 20 ingredientes."
+      }
+    ];
+
+    // Elementos DOM
+    const rankingList = document.getElementById("ranking-list");
+    const searchInput = document.getElementById("search-input");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const modal = document.getElementById("food-modal");
+    const modalContent = document.getElementById("modal-content");
+    const closeModal = document.querySelector(".close-modal");
+    const themeToggle = document.getElementById("theme-toggle");
+    const loading = document.getElementById("loading");
+
+    // Estado de la aplicación
+    let currentFoods = [...foods];
+    let isLoading = false;
+
+    // Función para mostrar/ocultar loading
+    function toggleLoading(show) {
+      isLoading = show;
+      loading.style.display = show ? "flex" : "none";
+    }
+
+    // Función para renderizar las tarjetas de comida
+    function renderFoodCards(foodsToRender) {
+      rankingList.innerHTML = "";
+
+      if (foodsToRender.length === 0) {
+        rankingList.innerHTML = `
+          <div class="no-results">
+            <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-muted);"></i>
+            <h3>No se encontraron resultados</h3>
+            <p>Intenta con otros términos de búsqueda o cambia los filtros.</p>
+          </div>
+        `;
+        return;
+      }
+
+      foodsToRender.forEach((food, index) => {
+        const li = document.createElement("li");
+        li.setAttribute("data-id", food.id);
+        li.setAttribute("data-category", food.category);
+        li.style.animationDelay = `${index * 0.1}s`;
+
+        // Crear estrellas basadas en la calificación
+        const starsHTML = generateStars(food.rating);
+
+        li.innerHTML = `
+          <div class="rank-badge">${food.rank}</div>
+          <img src="${food.image}" alt="${food.name}" class="food-img" loading="lazy">
+          <div class="food-info">
+            <h3>${food.name}</h3>
+            <span class="category">${getCategoryName(food.category)}</span>
+            <p>${food.description}</p>
+            <div class="rating">
+              <div class="stars">${starsHTML}</div>
+              <span class="rating-value">${food.rating}</span>
+            </div>
+            <button class="view-more" aria-label="Ver más detalles de ${food.name}">
+              Ver más <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        `;
+
+        rankingList.appendChild(li);
+
+        // Agregar evento para abrir modal
+        const viewMoreBtn = li.querySelector(".view-more");
+        viewMoreBtn.addEventListener("click", () => {
+          openFoodModal(food);
+        });
+
+        // Agregar evento de teclado para accesibilidad
+        viewMoreBtn.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openFoodModal(food);
+          }
+        });
+      });
+    }
+
+    // Función para generar estrellas
+    function generateStars(rating) {
+      const fullStars = Math.floor(rating);
+      const hasHalfStar = rating % 1 >= 0.5;
+      let starsHTML = "";
+
+      for (let i = 0; i < 5; i++) {
+        if (i < fullStars) {
+          starsHTML += '<i class="fas fa-star"></i>';
+        } else if (i === fullStars && hasHalfStar) {
+          starsHTML += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+          starsHTML += '<i class="far fa-star"></i>';
+        }
+      }
+
+      return starsHTML;
+    }
+
+    // Función para obtener el nombre completo de la categoría
+    function getCategoryName(category) {
+      const categories = {
+        italiana: "Italiana",
+        mexicana: "Mexicana",
+        asiatica: "Asiática",
+        española: "Española"
+      };
+
+      return categories[category] || category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
+    // Función para abrir el modal con detalles de la comida
+    function openFoodModal(food) {
+      const starsHTML = generateStars(food.rating);
+
+      // Crear lista de ingredientes
+      const ingredientsHTML = food.ingredients
+        .map((ingredient) => `<li><i class="fas fa-utensils"></i> ${ingredient}</li>`)
+        .join("");
+
+      modalContent.innerHTML = `
+        <img src="${food.image}" alt="${food.name}" class="modal-food-img">
+        <div class="modal-food-info">
+          <h2 id="modal-title">${food.name}</h2>
+          <span class="modal-category">${getCategoryName(food.category)}</span>
+          <div class="modal-rating">
+            <div class="stars">${starsHTML}</div>
+            <span class="rating-value">${food.rating}</span>
+            <span class="rank">#${food.rank} en el ranking mundial</span>
+          </div>
+          <div class="modal-description">
+            <p>${food.fullDescription || food.description}</p>
+          </div>
+          <div class="modal-ingredients">
+            <h3>Ingredientes principales</h3>
+            <ul class="ingredients-list">
+              ${ingredientsHTML}
+            </ul>
+          </div>
+        </div>
+      `;
+
+      modal.style.display = "block";
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden"; // Prevenir scroll
+
+      // Focus en el modal para accesibilidad
+      setTimeout(() => {
+        const modalTitle = document.getElementById("modal-title");
+        if (modalTitle) {
+          modalTitle.focus();
+        }
+      }, 100);
+    }
+
+    // Cerrar modal
+    function closeModalFunction() {
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "auto"; // Restaurar scroll
+    }
+
+    closeModal.addEventListener("click", closeModalFunction);
+
+    // Cerrar modal con tecla Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.style.display === "block") {
+        closeModalFunction();
+      }
+    });
+
+    // Cerrar modal al hacer clic fuera del contenido
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModalFunction();
+      }
+    });
+
+    // Función para filtrar comidas con debounce
+    let searchTimeout;
+    function filterFoods() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        toggleLoading(true);
+
+        setTimeout(() => {
+          const searchTerm = searchInput.value.toLowerCase().trim();
+          const activeCategory = document.querySelector(".filter-btn.active").dataset.category;
+
+          let filteredFoods = [...foods];
+
+          // Filtrar por categoría
+          if (activeCategory !== "all") {
+            filteredFoods = filteredFoods.filter((food) => food.category === activeCategory);
+          }
+
+          // Filtrar por término de búsqueda
+          if (searchTerm) {
+            filteredFoods = filteredFoods.filter(
+              (food) =>
+                food.name.toLowerCase().includes(searchTerm) ||
+                food.description.toLowerCase().includes(searchTerm) ||
+                food.ingredients.some((ingredient) => ingredient.toLowerCase().includes(searchTerm))
+            );
+          }
+
+          currentFoods = filteredFoods;
+          renderFoodCards(filteredFoods);
+          toggleLoading(false);
+        }, 300); // Simular tiempo de carga
+      }, 300);
+    }
+
+    // Filtrar por búsqueda
+    searchInput.addEventListener("input", filterFoods);
+
+    // Filtrar por categoría
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        // Remover clase activa de todos los botones
+        filterButtons.forEach((btn) => btn.classList.remove("active"));
+        // Agregar clase activa al botón clickeado
+        button.classList.add("active");
+
+        // Limpiar búsqueda al cambiar categoría
+        searchInput.value = "";
+
+        filterFoods();
+      });
+    });
+
+    // Cambiar tema
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+      document.documentElement.setAttribute("data-theme", newTheme);
+
+      // Cambiar icono con animación
+      themeToggle.style.transform = "scale(0.8)";
+      setTimeout(() => {
+        themeToggle.innerHTML = newTheme === "dark" ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        themeToggle.style.transform = "scale(1)";
+      }, 150);
+
+      // Guardar preferencia en localStorage
+      localStorage.setItem("theme", newTheme);
+
+      // Mostrar notificación
+      showNotification(`Tema ${newTheme === "dark" ? "oscuro" : "claro"} activado`);
+    }
+
+    themeToggle.addEventListener("click", toggleTheme);
+
+    // Función para mostrar notificaciones
+    function showNotification(message) {
+      // Remover notificación existente si la hay
+      const existingNotification = document.querySelector(".notification");
+      if (existingNotification) {
+        existingNotification.remove();
+      }
+
+      const notification = document.createElement("div");
+      notification.className = "notification";
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: var(--accent-neon);
+        color: var(--bg-color);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        z-index: 10000;
+        animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+      `;
+
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        if (notification.parentNode) {
+          notification.remove();
+        }
+      }, 3000);
+    }
+
+    // Función para manejar errores de carga de imágenes
+    function handleImageError(img) {
+      img.src = "https://via.placeholder.com/400x200/1e2028/00f0ff?text=Imagen+no+disponible";
+      img.alt = "Imagen no disponible";
+    }
+
+    // Agregar event listeners para errores de imagen
+    document.addEventListener(
+      "error",
+      (e) => {
+        if (e.target.tagName === "IMG") {
+          handleImageError(e.target);
+        }
+      },
+      true
+    );
+
+    // Función de inicialización
+    function initializeApp() {
+      // Cargar tema guardado
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        themeToggle.innerHTML = savedTheme === "dark" ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+      }
+
+      // Renderizar todas las comidas al cargar
+      toggleLoading(true);
+      setTimeout(() => {
+        renderFoodCards(foods);
+        toggleLoading(false);
+        showNotification("¡Bienvenido a FoodRank! 🍕");
+      }, 500);
+
+      // Agregar smooth scroll para navegación
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          }
+        });
+      });
+    }
+
+    // Event listener para cuando el DOM esté listo
+    document.addEventListener("DOMContentLoaded", initializeApp);
+
+    // Función para compartir (Web Share API)
+    function shareFood(food) {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: `${food.name} - FoodRank`,
+            text: `¡Mira esta deliciosa comida en el puesto #${food.rank}! ${food.description}`,
+            url: window.location.href
+          })
+          .catch(console.error);
+      } else {
+        // Fallback: copiar al portapapeles
+        const shareText = `${food.name} - Puesto #${food.rank} en FoodRank\n${food.description}\n${window.location.href}`;
+        navigator.clipboard
+          .writeText(shareText)
+          .then(() => {
+            showNotification("¡Enlace copiado al portapapeles!");
+          })
+          .catch(() => {
+            showNotification("No se pudo copiar el enlace");
+          });
+      }
+    }
+
+    // Exportar funciones para uso global (opcional)
+    window.FoodRank = {
+      foods,
+      renderFoodCards,
+      filterFoods,
+      openFoodModal,
+      shareFood,
+      toggleTheme
+    };
+  </script>
+</body>
+</html>
